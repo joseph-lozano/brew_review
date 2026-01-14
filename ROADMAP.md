@@ -58,17 +58,20 @@
   - Agent speaking indicator
   - Real-time transcript display with chat-style UI
 
----
-
-### To Do
-
-- [ ] **Webhook Handler**
+- [x] **Webhook Handler**
   - `POST /api/webhooks/retell` endpoint
   - Handle `call_ended` event (store transcript)
   - Handle `call_analyzed` event (store review data)
   - Link review to order
 
-- [ ] **Reviews Display**
-  - Show reviews on product pages
-  - Display extracted data (ratings, comments, etc.)
-  - Average ratings per product
+- [x] **Reviews Display**
+  - Product detail page (`/product/$productId`)
+  - Show reviews with ratings and extracted data
+  - Display taste notes, recommendations, issues, suggestions
+  - Average ratings shown on product cards and detail page
+
+---
+
+### To Do
+
+(All features complete!)
