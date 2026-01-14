@@ -1,0 +1,160 @@
+{
+  "catalog": {
+    "coffeeBeans": [
+      {
+        "id": "ethiopian-yirgacheffe",
+        "name": "Ethiopian Yirgacheffe",
+        "origin": "Ethiopia",
+        "roast": "Light",
+        "size": "12 oz",
+        "price": 18.99,
+        "reviewQuestions": [
+          "How would you describe the flavor notes (fruity, floral, citrus)?",
+          "Is the acidity level pleasant or too bright for your taste?",
+          "How does this compare to other light roasts you've tried?",
+          "What brewing method brings out the best flavors?",
+          "Would you recommend this for pour-over or other specific brewing styles?",
+          "How fresh did the beans smell when you opened the bag?",
+          "Is the price justified for the quality?"
+        ]
+      },
+      {
+        "id": "colombian-supremo",
+        "name": "Colombian Supremo",
+        "origin": "Colombia",
+        "roast": "Medium",
+        "size": "12 oz",
+        "price": 16.99,
+        "reviewQuestions": [
+          "How balanced is the flavor profile?",
+          "Do you detect any nutty or caramel notes?",
+          "Is this a good everyday drinking coffee?",
+          "How smooth is the finish?",
+          "Does it work well with milk or cream?",
+          "How consistent is the bean size and quality?",
+          "Would you buy this again at this price point?"
+        ]
+      },
+      {
+        "id": "sumatra-mandheling",
+        "name": "Sumatra Mandheling",
+        "origin": "Indonesia",
+        "roast": "Dark",
+        "size": "12 oz",
+        "price": 17.99,
+        "reviewQuestions": [
+          "How earthy or bold is the flavor?",
+          "Do you notice any spicy or herbal undertones?",
+          "Is the body as full as you expected for a dark roast?",
+          "How low is the acidity compared to other coffees?",
+          "Does it make a good French press or cold brew?",
+          "Is there any bitterness or burnt taste?",
+          "How does the aroma compare to the taste?"
+        ]
+      },
+      {
+        "id": "morning-kickstart",
+        "name": "Morning Kickstart",
+        "origin": "Blend",
+        "roast": "Dark",
+        "size": "12 oz",
+        "price": 14.99,
+        "reviewQuestions": [
+          "Does this coffee live up to its name for a morning wake-up?",
+          "How strong is the caffeine effect?",
+          "Is the flavor bold without being too bitter?",
+          "How does it taste black vs. with cream/sugar?",
+          "Is this good value for a daily driver coffee?",
+          "How well does it hold up throughout the morning?",
+          "Would you recommend this to someone new to dark roasts?"
+        ]
+      },
+      {
+        "id": "smooth-operator",
+        "name": "Smooth Operator",
+        "origin": "Blend",
+        "roast": "Medium",
+        "size": "12 oz",
+        "price": 13.99,
+        "reviewQuestions": [
+          "Is this coffee as smooth as the name suggests?",
+          "How mellow is the flavor profile?",
+          "Is it suitable for people who don't like strong coffee?",
+          "Does it have any interesting flavor complexity?",
+          "How versatile is it across different brewing methods?",
+          "Would you serve this to guests with varying coffee preferences?",
+          "Is this a good entry-level specialty coffee?"
+        ]
+      },
+      {
+        "id": "espresso-classico",
+        "name": "Espresso Classico",
+        "origin": "Blend",
+        "roast": "Dark",
+        "size": "12 oz",
+        "price": 15.99,
+        "reviewQuestions": [
+          "How well does this extract as espresso?",
+          "Does it produce a good crema?",
+          "How does it taste in milk-based drinks (lattes, cappuccinos)?",
+          "Is it too intense for regular drip coffee?",
+          "What flavor notes come through in espresso form?",
+          "How does it compare to coffee shop espresso blends?",
+          "Is the grind consistency good for espresso if pre-ground?"
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "id": "burr-master-pro",
+        "name": "Burr Master Pro",
+        "type": "Electric burr grinder",
+        "price": 89.99,
+        "reviewQuestions": [
+          "How consistent is the grind size?",
+          "How loud is the grinder during operation?",
+          "Is it easy to adjust between grind settings?",
+          "How easy is it to clean?",
+          "Does it retain much coffee in the burrs?",
+          "How durable does the build quality feel?",
+          "Is it worth the price compared to hand grinders?",
+          "How well does it handle different grind sizes (espresso to French press)?"
+        ]
+      },
+      {
+        "id": "french-press-classic",
+        "name": "French Press Classic",
+        "type": "French press",
+        "capacity": "34 oz",
+        "material": "Glass",
+        "price": 32.99,
+        "reviewQuestions": [
+          "How sturdy is the glass carafe?",
+          "Does the filter effectively keep grounds out of the coffee?",
+          "Is the plunger smooth and easy to press?",
+          "How well does it retain heat?",
+          "Is it easy to disassemble and clean?",
+          "Does it pour without dripping or spilling?",
+          "Is the handle comfortable and heat-resistant?",
+          "How does the coffee taste compared to other brewing methods?"
+        ]
+      },
+      {
+        "id": "gooseneck-kettle",
+        "name": "Gooseneck Kettle",
+        "type": "Electric kettle with temperature control",
+        "price": 54.99,
+        "reviewQuestions": [
+          "How precise is the temperature control?",
+          "Is the pour spout easy to control for pour-over?",
+          "How quickly does it heat water?",
+          "Does it hold temperature well?",
+          "Is the handle comfortable during extended pours?",
+          "How accurate is the temperature display?",
+          "Is the base stable and cord length adequate?",
+          "How easy is it to clean and descale?"
+        ]
+      }
+    ]
+  }
+}
