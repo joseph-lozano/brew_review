@@ -1,5 +1,5 @@
-import { Link } from '@tanstack/react-router'
-import { Coffee, ShoppingBag } from 'lucide-react'
+import { Link } from "@tanstack/react-router";
+import { Coffee, ShoppingBag } from "lucide-react";
 
 export default function Header() {
   return (
@@ -9,19 +9,19 @@ export default function Header() {
           <Coffee size={32} className="text-amber-200" />
           <span className="text-2xl font-bold">Brew Review</span>
         </Link>
-        
+
         <nav className="flex items-center gap-6">
           <Link
             to="/"
             className="hover:text-amber-200 transition-colors font-medium"
-            activeProps={{ className: 'text-amber-200 font-medium' }}
+            activeProps={{ className: "text-amber-200 font-medium" }}
           >
             Products
           </Link>
           <Link
             to="/orders"
             className="flex items-center gap-2 hover:text-amber-200 transition-colors font-medium"
-            activeProps={{ className: 'text-amber-200 font-medium' }}
+            activeProps={{ className: "text-amber-200 font-medium" }}
           >
             <ShoppingBag size={20} />
             Orders
@@ -29,5 +29,5 @@ export default function Header() {
         </nav>
       </div>
     </header>
-  )
+  );
 }
