@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as ProductProductIdRouteImport } from './routes/product.$productI
 import { Route as OrderConfirmationOrderIdRouteImport } from './routes/order-confirmation.$orderId'
 import { Route as ApiWebhooksRetellRouteImport } from './routes/api/webhooks/retell'
 
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrdersRoute = OrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/orders': typeof OrdersRoute
+  '/reviews': typeof ReviewsRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
   '/product/$productId': typeof ProductProductIdRoute
   '/review/$orderId': typeof ReviewOrderIdRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/orders': typeof OrdersRoute
+  '/reviews': typeof ReviewsRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
   '/product/$productId': typeof ProductProductIdRoute
   '/review/$orderId': typeof ReviewOrderIdRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/orders': typeof OrdersRoute
+  '/reviews': typeof ReviewsRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
   '/product/$productId': typeof ProductProductIdRoute
   '/review/$orderId': typeof ReviewOrderIdRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cart'
     | '/orders'
+    | '/reviews'
     | '/order-confirmation/$orderId'
     | '/product/$productId'
     | '/review/$orderId'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cart'
     | '/orders'
+    | '/reviews'
     | '/order-confirmation/$orderId'
     | '/product/$productId'
     | '/review/$orderId'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cart'
     | '/orders'
+    | '/reviews'
     | '/order-confirmation/$orderId'
     | '/product/$productId'
     | '/review/$orderId'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CartRoute: typeof CartRoute
   OrdersRoute: typeof OrdersRoute
+  ReviewsRoute: typeof ReviewsRoute
   OrderConfirmationOrderIdRoute: typeof OrderConfirmationOrderIdRoute
   ProductProductIdRoute: typeof ProductProductIdRoute
   ReviewOrderIdRoute: typeof ReviewOrderIdRoute
@@ -124,6 +137,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/orders': {
       id: '/orders'
       path: '/orders'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CartRoute: CartRoute,
   OrdersRoute: OrdersRoute,
+  ReviewsRoute: ReviewsRoute,
   OrderConfirmationOrderIdRoute: OrderConfirmationOrderIdRoute,
   ProductProductIdRoute: ProductProductIdRoute,
   ReviewOrderIdRoute: ReviewOrderIdRoute,

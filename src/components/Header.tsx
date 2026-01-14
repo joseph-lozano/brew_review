@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Coffee, ShoppingBag, ShoppingCart } from "lucide-react";
+import { Coffee, MessageSquare, ShoppingBag, ShoppingCart } from "lucide-react";
 import { useCart } from "./CartContext";
 
 export default function Header() {
@@ -20,6 +20,14 @@ export default function Header() {
             activeProps={{ className: "text-amber-200 font-medium" }}
           >
             Products
+          </Link>
+          <Link
+            to="/reviews"
+            className="flex items-center gap-2 hover:text-amber-200 transition-colors font-medium"
+            activeProps={{ className: "text-amber-200 font-medium" }}
+          >
+            <MessageSquare size={20} />
+            Reviews
           </Link>
           <Link
             to="/orders"
