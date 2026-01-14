@@ -53,6 +53,18 @@ export const reviews = sqliteTable("reviews", {
   createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch())`),
 });
 
+// Analysis data from Retell post-call analysis
+export interface ReviewAnalysisData {
+  overall_rating?: number;
+  product_quality_rating?: number;
+  freshness_rating?: number;
+  taste_notes?: string;
+  would_recommend?: boolean;
+  would_repurchase?: boolean;
+  issues_reported?: string;
+  suggestions?: string;
+}
+
 // Types
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
