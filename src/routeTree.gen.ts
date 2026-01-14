@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReviewOrderIdRouteImport } from './routes/review.$orderId'
 import { Route as OrderConfirmationOrderIdRouteImport } from './routes/order-confirmation.$orderId'
+import { Route as ApiWebhooksRetellRouteImport } from './routes/api/webhooks/retell'
 
 const OrdersRoute = OrdersRouteImport.update({
   id: '/orders',
@@ -29,24 +31,38 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewOrderIdRoute = ReviewOrderIdRouteImport.update({
+  id: '/review/$orderId',
+  path: '/review/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrderConfirmationOrderIdRoute =
   OrderConfirmationOrderIdRouteImport.update({
     id: '/order-confirmation/$orderId',
     path: '/order-confirmation/$orderId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiWebhooksRetellRoute = ApiWebhooksRetellRouteImport.update({
+  id: '/api/webhooks/retell',
+  path: '/api/webhooks/retell',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/orders': typeof OrdersRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
+  '/review/$orderId': typeof ReviewOrderIdRoute
+  '/api/webhooks/retell': typeof ApiWebhooksRetellRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/orders': typeof OrdersRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
+  '/review/$orderId': typeof ReviewOrderIdRoute
+  '/api/webhooks/retell': typeof ApiWebhooksRetellRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -54,13 +70,34 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/orders': typeof OrdersRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
+  '/review/$orderId': typeof ReviewOrderIdRoute
+  '/api/webhooks/retell': typeof ApiWebhooksRetellRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cart' | '/orders' | '/order-confirmation/$orderId'
+  fullPaths:
+    | '/'
+    | '/cart'
+    | '/orders'
+    | '/order-confirmation/$orderId'
+    | '/review/$orderId'
+    | '/api/webhooks/retell'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cart' | '/orders' | '/order-confirmation/$orderId'
-  id: '__root__' | '/' | '/cart' | '/orders' | '/order-confirmation/$orderId'
+  to:
+    | '/'
+    | '/cart'
+    | '/orders'
+    | '/order-confirmation/$orderId'
+    | '/review/$orderId'
+    | '/api/webhooks/retell'
+  id:
+    | '__root__'
+    | '/'
+    | '/cart'
+    | '/orders'
+    | '/order-confirmation/$orderId'
+    | '/review/$orderId'
+    | '/api/webhooks/retell'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -68,6 +105,8 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   OrdersRoute: typeof OrdersRoute
   OrderConfirmationOrderIdRoute: typeof OrderConfirmationOrderIdRoute
+  ReviewOrderIdRoute: typeof ReviewOrderIdRoute
+  ApiWebhooksRetellRoute: typeof ApiWebhooksRetellRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -93,11 +132,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/review/$orderId': {
+      id: '/review/$orderId'
+      path: '/review/$orderId'
+      fullPath: '/review/$orderId'
+      preLoaderRoute: typeof ReviewOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/order-confirmation/$orderId': {
       id: '/order-confirmation/$orderId'
       path: '/order-confirmation/$orderId'
       fullPath: '/order-confirmation/$orderId'
       preLoaderRoute: typeof OrderConfirmationOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/webhooks/retell': {
+      id: '/api/webhooks/retell'
+      path: '/api/webhooks/retell'
+      fullPath: '/api/webhooks/retell'
+      preLoaderRoute: typeof ApiWebhooksRetellRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -108,6 +161,8 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   OrdersRoute: OrdersRoute,
   OrderConfirmationOrderIdRoute: OrderConfirmationOrderIdRoute,
+  ReviewOrderIdRoute: ReviewOrderIdRoute,
+  ApiWebhooksRetellRoute: ApiWebhooksRetellRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

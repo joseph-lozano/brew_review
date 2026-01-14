@@ -130,14 +130,14 @@ function OrderCard({ order }: { order: OrderWithItems }) {
         {/* Leave Review Button */}
         {isCompleted && (
           <div className="mt-4 pt-4 border-t">
-            <button
-              className="w-full flex items-center justify-center gap-2 bg-amber-700 hover:bg-amber-800 text-white py-3 px-4 rounded-lg font-medium transition-colors cursor-not-allowed opacity-75"
-              disabled
-              title="Voice review feature coming soon"
+            <Link
+              to="/review/$orderId"
+              params={{ orderId: String(order.id) }}
+              className="w-full flex items-center justify-center gap-2 bg-amber-700 hover:bg-amber-800 text-white py-3 px-4 rounded-lg font-medium transition-colors"
             >
               <MessageSquare size={18} />
-              Leave a Voice Review (Coming Soon)
-            </button>
+              Leave a Voice Review
+            </Link>
           </div>
         )}
       </div>

@@ -44,22 +44,23 @@
 - [x] **Orders Page**
   - List past orders
   - Order details (items, total, date)
-  - "Leave Review" button on completed orders (placeholder - awaits review page)
+  - "Leave Review" button links to review page
+
+- [x] **Retell Integration**
+  - Server function to create web calls (`src/integrations/retell/create-web-call.ts`)
+  - Installed `retell-client-js-sdk`
+  - Voice agent configured in Retell dashboard (see `docs/retell-agent-setup.md`)
+
+- [x] **Review Collection UI**
+  - `/review/$orderId` page
+  - Start/end call buttons
+  - Call status display (idle, connecting, connected, ended, error)
+  - Agent speaking indicator
+  - Real-time transcript display with chat-style UI
 
 ---
 
 ### To Do
-
-- [ ] **Retell Integration**
-  - Backend: `POST /api/calls/create` endpoint to get access token
-  - Install `retell-client-js-sdk`
-  - Create voice agent in Retell dashboard
-
-- [ ] **Review Collection UI**
-  - `/review/:orderId` page
-  - Start call button
-  - Call status display (connecting, talking, ended)
-  - Real-time transcript display
 
 - [ ] **Webhook Handler**
   - `POST /api/webhooks/retell` endpoint
