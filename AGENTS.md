@@ -71,16 +71,16 @@ docs/                 # Documentation
 
 ### Naming Conventions
 
-| Item | Convention | Example |
-|------|------------|---------|
-| Files (components) | PascalCase | `Header.tsx`, `ProductCard.tsx` |
-| Files (utilities) | camelCase | `schema.ts`, `seed.ts` |
-| Components | PascalCase | `ProductCatalog`, `Header` |
-| Functions | camelCase | `getProducts`, `startReviewCall` |
-| Variables | camelCase | `coffeeProducts`, `allProducts` |
-| Types/Interfaces | PascalCase | `Product`, `NewProduct` |
-| DB columns | snake_case | `customer_name`, `created_at` |
-| Constants | camelCase | `seedProducts` |
+| Item               | Convention | Example                          |
+| ------------------ | ---------- | -------------------------------- |
+| Files (components) | PascalCase | `Header.tsx`, `ProductCard.tsx`  |
+| Files (utilities)  | camelCase  | `schema.ts`, `seed.ts`           |
+| Components         | PascalCase | `ProductCatalog`, `Header`       |
+| Functions          | camelCase  | `getProducts`, `startReviewCall` |
+| Variables          | camelCase  | `coffeeProducts`, `allProducts`  |
+| Types/Interfaces   | PascalCase | `Product`, `NewProduct`          |
+| DB columns         | snake_case | `customer_name`, `created_at`    |
+| Constants          | camelCase  | `seedProducts`                   |
 
 ### React Patterns
 
@@ -136,15 +136,15 @@ export type NewTableRow = typeof tableName.$inferInsert;
 
 ## Important Files
 
-| Purpose | Path |
-|---------|------|
-| Database schema | `src/db/schema.ts` |
-| Route examples | `src/routes/index.tsx` |
-| TypeScript config | `tsconfig.json` |
-| ESLint config | `eslint.config.js` |
-| Prettier config | `.prettierrc` |
-| Project roadmap | `ROADMAP.md` |
-| Retell AI docs | `docs/voice-ai-integration.md` |
+| Purpose           | Path                           |
+| ----------------- | ------------------------------ |
+| Database schema   | `src/db/schema.ts`             |
+| Route examples    | `src/routes/index.tsx`         |
+| TypeScript config | `tsconfig.json`                |
+| ESLint config     | `eslint.config.js`             |
+| Prettier config   | `.prettierrc`                  |
+| Project roadmap   | `ROADMAP.md`                   |
+| Retell AI docs    | `docs/voice-ai-integration.md` |
 
 ## Critical Notes
 
@@ -154,3 +154,65 @@ export type NewTableRow = typeof tableName.$inferInsert;
 4. **Run `bun run check`** before committing to catch all issues
 5. **Tailwind v4** uses `@import "tailwindcss"` syntax
 6. **Amber color theme** - Use amber palette for UI consistency
+7. **No `"use client"` directive** - TanStack Start is NOT Next.js. See details below.
+
+## TanStack Start Execution Model
+
+TanStack Start has a different architecture than Next.js App Router. **Do NOT use `"use client"` or `"use server"` directives at the top of files.**
+
+### Key Differences from Next.js
+
+| Next.js App Router           | TanStack Start                           |
+| ---------------------------- | ---------------------------------------- |
+| `"use client"` directive     | Not used - all components are isomorphic |
+| `"use server"` at file top   | Not used at file level                   |
+| Server Components by default | Components run on both server AND client |
+
+### How TanStack Start Works
+
+1. **All components are isomorphic** - They render on the server first, then hydrate on the client
+2. **Server functions use `createServerFn`** - This is the ONLY way to create server-only code:
+
+```typescript
+// Correct: Server function with createServerFn
+const getData = createServerFn({ method: "GET" }).handler(async () => {
+  // This code runs ONLY on the server
+  return db.select().from(products).all();
+});
+```
+
+3. **Client-only code** - Use environment checks or effects:
+
+```typescript
+// Option 1: Check for window
+if (typeof window !== "undefined") {
+  // Client-only code
+}
+
+// Option 2: Use useEffect (runs only on client)
+useEffect(() => {
+  // Client-only code
+}, []);
+```
+
+### Common Mistakes to Avoid
+
+```typescript
+// WRONG: Don't use "use client" - this is Next.js syntax
+"use client";
+export function MyComponent() { ... }
+
+// WRONG: Don't use "use server" at file top
+"use server";
+export async function getData() { ... }
+
+// CORRECT: Use createServerFn for server code
+const getData = createServerFn({ method: "GET" }).handler(async () => {
+  // Server-only code here
+});
+
+// CORRECT: Components work without any directive
+export function MyComponent() {
+  // Runs on server (SSR) then hydrates on client
+}
+```

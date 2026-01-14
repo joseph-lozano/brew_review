@@ -1,6 +1,7 @@
 # Brew Review - Implementation Roadmap
 
 ## Tech Stack
+
 - **Frontend:** React + TypeScript + TanStack Start
 - **Backend:** TanStack Start (server functions)
 - **Database:** SQLite + Drizzle ORM
@@ -34,15 +35,15 @@
   - Navigation (Products, Orders)
   - Amber/coffee themed styling
 
----
-
-### To Do
-
-- [ ] **Mock Order System**
+- [x] **Mock Order System**
   - "Add to Cart" functionality
   - Cart state management
   - Checkout flow (creates fake order)
   - Order confirmation
+
+---
+
+### To Do
 
 - [ ] **Orders Page**
   - List past orders
