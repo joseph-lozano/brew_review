@@ -1,118 +1,99 @@
 import { createFileRoute } from '@tanstack/react-router'
-import {
-  Zap,
-  Server,
-  Route as RouteIcon,
-  Shield,
-  Waves,
-  Sparkles,
-} from 'lucide-react'
+import { createServerFn } from '@tanstack/react-start'
+import { db } from '../db'
+import { products } from '../db/schema'
+import type { Product } from '../db/schema'
+import { Coffee, ShoppingCart } from 'lucide-react'
 
-export const Route = createFileRoute('/')({ component: App })
+const getProducts = createServerFn({ method: 'GET' }).handler(async () => {
+  return db.select().from(products).all()
+})
 
-function App() {
-  const features = [
-    {
-      icon: <Zap className="w-12 h-12 text-cyan-400" />,
-      title: 'Powerful Server Functions',
-      description:
-        'Write server-side code that seamlessly integrates with your client components. Type-safe, secure, and simple.',
-    },
-    {
-      icon: <Server className="w-12 h-12 text-cyan-400" />,
-      title: 'Flexible Server Side Rendering',
-      description:
-        'Full-document SSR, streaming, and progressive enhancement out of the box. Control exactly what renders where.',
-    },
-    {
-      icon: <RouteIcon className="w-12 h-12 text-cyan-400" />,
-      title: 'API Routes',
-      description:
-        'Build type-safe API endpoints alongside your application. No separate backend needed.',
-    },
-    {
-      icon: <Shield className="w-12 h-12 text-cyan-400" />,
-      title: 'Strongly Typed Everything',
-      description:
-        'End-to-end type safety from server to client. Catch errors before they reach production.',
-    },
-    {
-      icon: <Waves className="w-12 h-12 text-cyan-400" />,
-      title: 'Full Streaming Support',
-      description:
-        'Stream data from server to client progressively. Perfect for AI applications and real-time updates.',
-    },
-    {
-      icon: <Sparkles className="w-12 h-12 text-cyan-400" />,
-      title: 'Next Generation Ready',
-      description:
-        'Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.',
-    },
-  ]
+export const Route = createFileRoute('/')({
+  component: ProductCatalog,
+  loader: () => getProducts(),
+})
+
+function ProductCatalog() {
+  const allProducts = Route.useLoaderData()
+  
+  const coffeeProducts = allProducts.filter(p => p.category === 'coffee')
+  const equipmentProducts = allProducts.filter(p => p.category === 'equipment')
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-      <section className="relative py-20 px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10"></div>
-        <div className="relative max-w-5xl mx-auto">
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <img
-              src="/tanstack-circle-logo.png"
-              alt="TanStack Logo"
-              className="w-24 h-24 md:w-32 md:h-32"
-            />
-            <h1 className="text-6xl md:text-7xl font-black text-white [letter-spacing:-0.08em]">
-              <span className="text-gray-300">TANSTACK</span>{' '}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                START
-              </span>
-            </h1>
-          </div>
-          <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-            The framework for next generation AI applications
+    <div className="min-h-screen bg-amber-50">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Hero */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-amber-900 mb-4">
+            Premium Coffee & Equipment
+          </h1>
+          <p className="text-lg text-amber-700">
+            Carefully sourced beans and quality brewing gear
           </p>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-            Full-stack framework powered by TanStack Router for React and Solid.
-            Build modern applications with server functions, streaming, and type
-            safety.
-          </p>
-          <div className="flex flex-col items-center gap-4">
-            <a
-              href="https://tanstack.com/start"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/50"
-            >
-              Documentation
-            </a>
-            <p className="text-gray-400 text-sm mt-2">
-              Begin your TanStack Start journey by editing{' '}
-              <code className="px-2 py-1 bg-slate-700 rounded text-cyan-400">
-                /src/routes/index.tsx
-              </code>
-            </p>
-          </div>
         </div>
-      </section>
 
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-400 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+        {/* Coffee Section */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold text-amber-900 mb-6 flex items-center gap-2">
+            <Coffee className="text-amber-700" />
+            Coffee Beans
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {coffeeProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+
+        {/* Equipment Section */}
+        <section>
+          <h2 className="text-2xl font-bold text-amber-900 mb-6">
+            Equipment & Accessories
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {equipmentProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+function ProductCard({ product }: { product: Product }) {
+  return (
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+      <div className="h-48 bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center">
+        <Coffee size={64} className="text-amber-400" />
+      </div>
+      <div className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
+          <span className="text-lg font-bold text-amber-700">
+            ${product.price.toFixed(2)}
+          </span>
         </div>
-      </section>
+        
+        {product.category === 'coffee' && (
+          <div className="flex gap-2 mb-2">
+            <span className="px-2 py-1 bg-amber-100 text-amber-800 text-xs rounded-full">
+              {product.roast}
+            </span>
+            <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+              {product.origin}
+            </span>
+          </div>
+        )}
+        
+        <p className="text-gray-600 text-sm mb-4">{product.description}</p>
+        
+        <button className="w-full bg-amber-700 hover:bg-amber-800 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+          <ShoppingCart size={18} />
+          Add to Cart
+        </button>
+      </div>
     </div>
   )
 }
