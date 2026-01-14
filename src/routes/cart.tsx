@@ -22,12 +22,13 @@ const checkoutSchema = z.object({
 
 const createOrder = createServerFn({ method: "POST" })
   .inputValidator(checkoutSchema)
-  .handler(async ({ data }) => {
+  .handler(({ data }) => {
     const { customerName, customerEmail, items, totalAmount } = data;
 
-    return await db.transaction(async (tx) => {
+    // Use synchronous transaction for better-sqlite3
+    const order = db.transaction((tx) => {
       // Create the order
-      const [order] = await tx
+      const newOrder = tx
         .insert(orders)
         .values({
           customerName,
@@ -35,20 +36,25 @@ const createOrder = createServerFn({ method: "POST" })
           totalAmount,
           status: "completed",
         })
-        .returning();
+        .returning()
+        .get();
 
       // Create order items
-      await tx.insert(orderItems).values(
-        items.map((item) => ({
-          orderId: order.id,
-          productId: item.productId,
-          quantity: item.quantity,
-          priceAtPurchase: item.price,
-        }))
-      );
+      tx.insert(orderItems)
+        .values(
+          items.map((item) => ({
+            orderId: newOrder.id,
+            productId: item.productId,
+            quantity: item.quantity,
+            priceAtPurchase: item.price,
+          }))
+        )
+        .run();
 
-      return { orderId: order.id };
+      return newOrder;
     });
+
+    return { orderId: order.id };
   });
 
 export const Route = createFileRoute("/cart")({
@@ -62,10 +68,16 @@ function CartPage() {
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (items.length === 0) return;
+    setError(null);
+
+    if (items.length === 0) {
+      setError("Cart is empty");
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -84,8 +96,8 @@ function CartPage() {
 
       clearCart();
       navigate({ to: "/order-confirmation/$orderId", params: { orderId: String(result.orderId) } });
-    } catch (error) {
-      console.error("Checkout failed:", error);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Checkout failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -247,6 +259,12 @@ function CartPage() {
                 <span className="text-xl font-bold text-amber-700">${totalAmount.toFixed(2)}</span>
               </div>
             </div>
+
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                {error}
+              </div>
+            )}
 
             <div className="flex gap-4">
               <button

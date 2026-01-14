@@ -41,14 +41,14 @@
   - Checkout flow (creates fake order)
   - Order confirmation
 
+- [x] **Orders Page**
+  - List past orders
+  - Order details (items, total, date)
+  - "Leave Review" button on completed orders (placeholder - awaits review page)
+
 ---
 
 ### To Do
-
-- [ ] **Orders Page**
-  - List past orders
-  - Order details (items, total, date)
-  - "Leave Review" button on completed orders
 
 - [ ] **Retell Integration**
   - Backend: `POST /api/calls/create` endpoint to get access token
